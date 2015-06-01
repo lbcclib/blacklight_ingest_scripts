@@ -1,6 +1,7 @@
 #!/usr/bin/python
 from pymarc import MARCReader, Field
 import os, re, urllib
+from indexing_functions import index_file
 
 
 def remove_bad_subjects(record):
@@ -41,7 +42,7 @@ def index_files(db_short_name, db_long_name):
 
          out.write(record.as_marc())
       out.close()
-      os.system('java -Xmx512m  -Dsolr.hosturl=http://127.0.0.1:8983/solr  -jar /home/lbccadmin/.gem/ruby/gems/blacklight-marc-5.4.0/lib/SolrMarc.jar /home/lbccadmin/beta/config/SolrMarc/config.properties ' + output_file_name)
+      index_file(output_file_name)
 
 index_files('ovic', 'Opposing Viewpoints in Context')
 index_files('uhic', 'U.S. History In Context')
