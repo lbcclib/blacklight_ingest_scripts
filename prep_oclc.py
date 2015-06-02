@@ -82,11 +82,12 @@ with open(file_name, 'rb') as fh:
             for field650 in record.get_fields('650'):
                if 'Streaming video' in field650['a']:
                   record.remove_field(field650)
-            remove_all_fields_with_tag('856', record)
+            remove_all_fields_with_tag('710', record)
             for field856 in record.get_fields('856'):
                field856['u'] = field856['u']+'&cid=1639'
             if 'TEDTalks' in record['245']['a'] or 'WPA Film Library' in record['245']['a']:
-               record['245']['a'] = record['245']['b']
+               if record['245']['b']:
+                  record['245']['a'] = record['245']['b']
 
          elif 'HathiTrust Public Domain only in US Access' == source:
             remove_bad_subjects(record)
@@ -115,7 +116,6 @@ with open(file_name, 'rb') as fh:
             for field655 in record.get_fields('655'):
                if '4' == field655.indicators[1]:
                   record.remove_field(field655)
-
 
          out.write(record.as_marc())
    out.close()
