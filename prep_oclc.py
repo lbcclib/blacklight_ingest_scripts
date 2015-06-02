@@ -39,6 +39,7 @@ with open(file_name, 'rb') as fh:
          elif 'American Song' == source:
             record.leader = record.leader[:6] + 'jz' + record.leader[8:]
             remove_bad_subjects(record)
+            remove_all_fields_with_tag('007', record)
             remove_all_fields_with_tag('490', record)
             for field500 in record.get_fields('500'):
                if 'Compact dis' in field500:
@@ -53,6 +54,7 @@ with open(file_name, 'rb') as fh:
          elif 'Classical Music Library' == source:
             record.leader = record.leader[:6] + 'jz' + record.leader[8:]
             remove_bad_subjects(record)
+            remove_all_fields_with_tag('007', record)
             remove_all_fields_with_tag('655', record)
 
          elif 'Directory of Open Access Books' == source:
@@ -106,6 +108,7 @@ with open(file_name, 'rb') as fh:
 
          elif 'Smithsonian Global Sound For Libraries' == source:
             record.leader = record.leader[:6] + 'jz' + record.leader[8:]
+            remove_all_fields_with_tag('007', record)
 
          elif 'Wright American Fiction' == source:
             record.leader = record.leader[:6] + 'az' + record.leader[8:]
