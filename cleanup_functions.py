@@ -66,40 +66,43 @@ def remove_all_fields_with_tag(tag, record):
    for field_to_delete in record.get_fields(tag):
       record.remove_field(field_to_delete)
 
+def remove_all_fields_with_tags(tags, record):
+   for tag in tags:
+      for field_to_delete in record.get_fields(tag):
+         record.remove_field(field_to_delete)
+
+def remove_field_with_substring(tag, subfield, value, record):
+   substring_values = []
+   if type(value) is not list:
+      substring_values.append(value)
+   else:
+      substring_values = value
+   for field in record.get_fields(tag):
+      if field[subfield]:
+         for string in substring_values:
+            if string in field[subfield]:
+               record.remove_field(field)
+
+def remove_field_with_indicator(tag, pos, value, record):
+   indicator_values = []
+   if type(value) is not list:
+      indicator_values.append(value)
+   else:
+      indicator_values = value
+   for field in record.get_fields(tag):
+      if field.indicators[pos] in indicator_values:
+         record.remove_field(field)
 
 def remove_bad_subjects(record):
-   for field600 in record.get_fields('600'):
-      if (('6' == field600.indicators[1]) or ('7' == field600.indicators[1])):
-         record.remove_field(field600)
-   for field610 in record.get_fields('610'):
-      if (('6' == field610.indicators[1]) or ('7' == field610.indicators[1])):
-         record.remove_field(field610)
-   for field611 in record.get_fields('611'):
-      if (('6' == field611.indicators[1]) or ('7' == field611.indicators[1])):
-         record.remove_field(field611)
-   for field650 in record.get_fields('650'):
-      if (('6' == field650.indicators[1]) or ('7' == field650.indicators[1])):
-         record.remove_field(field650)
-   for field651 in record.get_fields('651'):
-      if (('6' == field651.indicators[1]) or ('7' == field651.indicators[1])):
-         record.remove_field(field651)
+   subject_fields = ['600', '610', '611', '650', '651']
+   bad_indicators = ['6', '7']
+   for field in subject_fields:
+      remove_field_with_indicator(field, 1, bad_indicators, record)
 
 def remove_empty_place_of_publication(record):
-   for field260 in record.get_fields('260'):
-      if field260['a']:
-         if ('not identified' in field260['a']) or ('s.l.' in field260['a']):
-            record.remove_field(field260)
-   for field264 in record.get_fields('264'):
-      if field264['a']:
-         if ('not identified' in field264['a']) or ('s.l.' in field264['a']):
-            record.remove_field(field264)
+   remove_field_with_substring('260', 'a', ['not identified', 's.l.'], record)
+   remove_field_with_substring('264', 'a', ['not identified', 's.l.'], record)
 
 def remove_empty_publisher(record):
-   for field260 in record.get_fields('260'):
-      if field260['b']:
-         if ('not identified' in field260['b']):
-            record.remove_field(field260)
-   for field264 in record.get_fields('264'):
-      if field264['b']:
-         if ('not identified' in field264['b']):
-            record.remove_field(field264)
+   remove_field_with_substring('260', 'b', 'not identified', record)
+   remove_field_with_substring('264', 'b', 'not identified', record)
