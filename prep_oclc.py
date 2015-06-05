@@ -33,18 +33,6 @@ with open(file_name, 'rb') as fh:
          for f in record.get_fields('950'):
             source = f['a']
 
-      bibliography = BibEntry()
-      bibliography.apply_marc_values(record)
-      
-      record.add_field(
-         Field(
-            tag = '951',
-            indicators = [' ', ' '],
-            subfields = [
-               'a', bibliography.as_bibtex()
-            ]))
-
-      
 
       #Vendor-specific cleanup
       if 'American History in Video' == source:
@@ -56,7 +44,7 @@ with open(file_name, 'rb') as fh:
          record.leader = record.leader[:6] + 'jz' + record.leader[8:]
          remove_bad_subjects(record)
          fields_to_delete.extend(['007', '490', '655'])
-         record.remove_by_substring('500', 'a', 'Compact dis', record)
+         remove_field_with_substring('500', 'a', 'Compact dis', record)
 
       elif 'Credo Academic Core' == source:
          record.leader = record.leader[:6] + 'az' + record.leader[8:]
@@ -107,7 +95,7 @@ with open(file_name, 'rb') as fh:
       elif 'NCBI Bookshelf' == source:
          record.leader = record.leader[:6] + 'az' + record.leader[8:]
          remove_bad_subjects(record)
-         fields_to_delete.append('007', '655')
+         fields_to_delete.extend(['007', '655'])
 
       elif 'Smithsonian Global Sound For Libraries' == source:
          record.leader = record.leader[:6] + 'jz' + record.leader[8:]
@@ -116,6 +104,22 @@ with open(file_name, 'rb') as fh:
       elif 'Wright American Fiction' == source:
          record.leader = record.leader[:6] + 'az' + record.leader[8:]
          remove_field_with_indicator('655', 1, '4', record)
+
+
+
+
+      bibliography = BibEntry()
+      bibliography.apply_marc_values(record)
+      
+      record.add_field(
+         Field(
+            tag = '951',
+            indicators = [' ', ' '],
+            subfields = [
+               'a', bibliography.as_bibtex()
+            ]))
+
+      
 
       remove_all_fields_with_tags(fields_to_delete, record)
       out.write(record.as_marc())
