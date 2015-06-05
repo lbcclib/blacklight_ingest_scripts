@@ -14,6 +14,7 @@ class BibEntry:
       #Additional elements
       self.address = ''
       self.series = ''
+      self.url = ''
 
    def apply_marc_values(self, record):
       if record['100']:
@@ -47,6 +48,11 @@ class BibEntry:
                      match = re.search(r'([12][0-9]{3})', field264['c'])
                      if match:
                        self.year = match.group(0)
+      for field950 in record.get_fields('950'):
+         if field950['b']:
+            if 'nline' in field950['b']:
+               for field856 in record.get_fields('856'):
+                  self.url = field856['u']
          
 
    def apply_sample_values(self):
@@ -67,7 +73,8 @@ class BibEntry:
       bibtex_entry.append(self.line('title', self.title))
       bibtex_entry.append(self.line('year', self.year))
       bibtex_entry.append(self.line('address', self.address))
-      bibtex_entry.append(self.line('series', self.series))
+      bibtex_entry.append(self.line('series', self.url))
+      bibtex_entry.append(self.line('url', self.series))
       bibtex_entry.append('}')
       return ''.join(bibtex_entry)
 
