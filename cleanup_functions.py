@@ -95,9 +95,14 @@ def remove_field_with_indicator(tag, pos, value, record):
 
 def remove_bad_subjects(record):
    subject_fields = ['600', '610', '611', '650', '651']
+   bad_sh = ['Social sciences']
    bad_indicators = ['6', '7']
    for field in subject_fields:
       remove_field_with_indicator(field, 1, bad_indicators, record)
+   for field650 in record.get_fields('650'):
+      if field650['a']:
+         if field650['a'] in bad_sh:
+            record.remove_field(field650)
 
 def remove_empty_place_of_publication(record):
    remove_field_with_substring('260', 'a', ['not identified', 's.l.'], record)
