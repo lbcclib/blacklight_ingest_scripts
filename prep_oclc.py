@@ -80,7 +80,7 @@ with open(file_name, 'rb') as fh:
          if 'TEDTalks' in record['245']['a'] or 'WPA Film Library' in record['245']['a']:
             if record['245']['b']:
                record['245']['a'] = record['245']['b']
-         fields_to_delete.extend(['500', '710'])
+         fields_to_delete.extend(['500', '655', '710'])
 
       elif 'HathiTrust Public Domain only in US Access' == source:
          remove_bad_subjects(record)
