@@ -76,7 +76,7 @@ with open(file_name, 'rb') as fh:
          remove_bad_subjects(record)
          remove_field_with_substring('650', 'a', 'Streaming video', record)
          for field856 in record.get_fields('856'):
-            field856['u'] = field856['u']+'&cid=1639'
+            field856['u'] = field856['u'].replace('aid=','aid=4065',1).replace('portalPlaylists', 'PortalPlaylists', 1)+'&cid=1639'
          if 'TEDTalks' in record['245']['a'] or 'WPA Film Library' in record['245']['a']:
             if record['245']['b']:
                record['245']['a'] = record['245']['b']
