@@ -2,7 +2,7 @@
 from pymarc import MARCReader, Field
 import os, re, urllib
 from indexing_functions import index_file
-
+import linux_paths as paths #linux_paths or windows_paths
 
 def remove_bad_subjects(record):
    for field650 in record.get_fields('650'):
@@ -11,7 +11,7 @@ def remove_bad_subjects(record):
 
 
 def index_files(db_short_name, db_long_name):
-   file_name = '/home/lbccadmin/data/new/' + db_short_name + '.mrc'
+   file_name = paths.new + db_short_name + '.mrc'
    urllib.urlretrieve('http://access.gale.com/api/dropoff/resources/' + db_short_name + '.mrc', file_name)
    output_file_name = file_name + '.tmp.mrc'
 
