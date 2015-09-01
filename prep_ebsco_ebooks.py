@@ -35,7 +35,7 @@ with open(file_name, 'rb') as fh:
    out = open(output_file_name, 'wb')
    reader = MARCReader(fh, to_unicode=True, force_utf8='true', utf8_handling='replace')
    for record in reader:
-      print record['001']
+      print(record['001'])
 
       # General cleanup
       remove_bad_subjects(record)
