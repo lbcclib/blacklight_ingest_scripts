@@ -14,6 +14,19 @@ with open(sys.argv[0], 'rb') as fh:
                'a', 'LBCC library catalog',
                'b', 'At the library'
             ]))
+            
+            
+      bibliography = BibEntry()
+      bibliography.apply_marc_values(record)
+      
+      record.add_field(
+         Field(
+            tag = '951',
+            indicators = [' ', ' '],
+            subfields = [
+               'a', bibliography.as_bibtex()
+            ]))
+            
       out.write(record.as_marc())
    out.close()
 
