@@ -20,7 +20,7 @@ for line in files:
    if ((date.today() - from_ftp.date()) < timedelta(weeks=1)):
       filename = col_list[8]
       ftp.retrbinary('RETR %s' % filename, open(paths.new + filename, 'a+').write)
-      os.system('python ~/scripts/prep_oclc.py ' + paths.new + filename)
+      os.system('python ' + paths.scripts_dir + 'prep_oclc.py ' + paths.new + filename)
 
 
 #Update files
@@ -34,7 +34,7 @@ for line in files:
    if ((date.today() - from_ftp.date()) < timedelta(weeks=1)):
       filename = col_list[8]
       ftp.retrbinary('RETR %s' % filename, open(paths.update + filename, 'a+').write)
-      os.system('python ~/scripts/prep_oclc.py ' + paths.update + filename)
+      os.system('python ' + paths.scripts_dir + 'prep_oclc.py ' + paths.update + filename)
 
 #Delete files
 ftp.cwd('../deletes')
@@ -47,4 +47,4 @@ for line in files:
    if ((date.today() - from_ftp.date()) < timedelta(weeks=1)):
       filename = col_list[8]
       ftp.retrbinary('RETR %s' % filename, open(paths.delete + filename, 'a+').write)
-      os.system('python ~/scripts/delete_oclc.py ' + paths.delete + filename)
+      os.system('python ' + paths.scripts_dir 'delete_oclc.py ' + paths.delete + filename)
