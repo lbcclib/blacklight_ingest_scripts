@@ -19,7 +19,7 @@ def index_files(db_short_name, db_long_name):
       out = open(output_file_name, 'wb')
       reader = MARCReader(fh, to_unicode=True, force_utf8='true', utf8_handling='replace')
       for record in reader:
-         print record['001']
+         print(record['001'])
 
          remove_bad_subjects(record)
 
