@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 from pymarc import MARCReader
+from bibtex_functions import BibEntry
 import sys
 
 with open(sys.argv[0], 'rb') as fh:
