@@ -4,7 +4,7 @@ from ftplib import FTP
 import os, time
 import oclc_credentials
 import windows_paths as paths #or linux_paths
-from datetime import strptime, date, timedelta
+from datetime import date, timedelta
 
 ftp = FTP(oclc_credentials.server)
 ftp.login(oclc_credentials.username, oclc_credentials.password)
