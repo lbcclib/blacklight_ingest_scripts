@@ -3,7 +3,7 @@
 from ftplib import FTP
 import os, time
 import oclc_credentials
-import windows_paths as paths #or linux_paths
+import linux_paths as paths #windows_paths or linux_paths
 from datetime import date, datetime, timedelta
 
 ftp = FTP(oclc_credentials.server)
@@ -26,7 +26,7 @@ for line in files:
 #Update files
 ftp.cwd('../updates')
 files = []
-ftp.dir(data.append)
+ftp.dir(files.append)
 for line in files:
    col_list = line.split()
    date_str = ' '.join(line.split()[5:8])
@@ -39,7 +39,7 @@ for line in files:
 #Delete files
 ftp.cwd('../deletes')
 files = []
-ftp.dir(data.append)
+ftp.dir(files.append)
 for line in files:
    col_list = line.split()
    date_str = ' '.join(line.split()[5:8])
