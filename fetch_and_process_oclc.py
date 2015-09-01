@@ -47,4 +47,4 @@ for line in files:
    if ((date.today() - from_ftp.date()) < timedelta(weeks=1)):
       filename = col_list[8]
       ftp.retrbinary('RETR %s' % filename, open(paths.delete + filename, 'a+').write)
-      os.system('python ' + paths.scripts_dir 'delete_oclc.py ' + paths.delete + filename)
+      os.system('python ' + paths.scripts_dir + 'delete_oclc.py ' + paths.delete + filename)
