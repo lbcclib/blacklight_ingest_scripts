@@ -4,8 +4,13 @@ from pymarc import MARCReader
 from bibtex_functions import BibEntry
 import sys
 
+if sys.argv[1]:
+   file_name = sys.argv[1]
+else:
+   file_name = '/home/lbccadmin/data/eg_to_index.mrc'
+
 with open(sys.argv[0], 'rb') as fh:
-   out = open('/home/lbccadmin/data/eg_to_index.mrc', 'wb')
+   out = open(file_name, 'wb')
    reader = MARCReader(fh)
    for record in reader:
       record.add_field(
