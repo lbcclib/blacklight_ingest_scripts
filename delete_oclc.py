@@ -1,8 +1,9 @@
 #!/usr/bin/python
 from pymarc import MARCReader, Field
 import sys, os, urllib, urllib2
+import linux_paths as paths #linux_paths or windows_paths
 
-DELETE_PREFIX = 'http://localhost:8983/solr/update?'
+DELETE_PREFIX = paths.solr_url + 'update?'
 DELETE_SUFFIX = '&commit=true'
 
 if sys.argv[1]:
