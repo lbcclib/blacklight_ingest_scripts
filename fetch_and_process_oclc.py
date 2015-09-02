@@ -41,7 +41,7 @@ for line in files:
 #Delete files
 ftp = FTP(oclc_credentials.server)
 ftp.login(oclc_credentials.username, oclc_credentials.password)
-ftp.cwd('metacoll/out/ongoing/updates')
+ftp.cwd('metacoll/out/ongoing/deletes')
 files = []
 ftp.dir(files.append)
 for line in files:
