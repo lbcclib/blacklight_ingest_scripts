@@ -26,9 +26,7 @@ for line in files:
 
 
 #Update files
-ftp = FTP(oclc_credentials.server)
-ftp.login(oclc_credentials.username, oclc_credentials.password)
-ftp.cwd('metacoll/out/ongoing/updates')
+ftp.cwd('../updates')
 files = []
 ftp.dir(files.append)
 for line in files:
@@ -42,9 +40,7 @@ for line in files:
       os.system('python ' + paths.scripts_dir + 'prep_oclc.py ' + paths.update + filename)
 
 #Delete files
-ftp = FTP(oclc_credentials.server)
-ftp.login(oclc_credentials.username, oclc_credentials.password)
-ftp.cwd('metacoll/out/ongoing/deletes')
+ftp.cwd('../deletes')
 files = []
 ftp.dir(files.append)
 for line in files:
