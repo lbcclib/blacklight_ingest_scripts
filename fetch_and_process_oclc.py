@@ -3,11 +3,12 @@
 from ftplib import FTP
 import os, time
 import oclc_credentials
-import linux_paths as paths #windows_paths or linux_paths
+import windows_paths as paths #windows_paths or linux_paths
 from datetime import date, datetime, timedelta
 
 ftp = FTP(oclc_credentials.server)
 ftp.login(oclc_credentials.username, oclc_credentials.password)
+print("OCLC login successful")
 
 #New files
 ftp.cwd('metacoll/out/ongoing/new')
@@ -20,6 +21,7 @@ for line in files:
    if ((date.today() - file_date) < timedelta(weeks=1)):
       filename = col_list[8]
       ftp.retrbinary('RETR %s' % filename, open(paths.new + filename, 'a+').write)
+      print("New record file " + filename + " downloaded")
       os.system('python ' + paths.scripts_dir + 'prep_oclc.py ' + paths.new + filename)
 
 
@@ -36,6 +38,7 @@ for line in files:
    if ((date.today() - file_date) < timedelta(weeks=1)):
       filename = col_list[8]
       ftp.retrbinary('RETR %s' % filename, open(paths.update + filename, 'a+').write)
+      print("Update record file " + filename + " downloaded")
       os.system('python ' + paths.scripts_dir + 'prep_oclc.py ' + paths.update + filename)
 
 #Delete files
@@ -51,4 +54,5 @@ for line in files:
    if ((date.today() - file_date) < timedelta(weeks=1)):
       filename = col_list[8]
       ftp.retrbinary('RETR %s' % filename, open(paths.delete + filename, 'a+').write)
+      print("Delete record file " + filename + " downloaded")
       os.system('python ' + paths.scripts_dir + 'delete_oclc.py ' + paths.delete + filename)
