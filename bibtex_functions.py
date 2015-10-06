@@ -73,8 +73,8 @@ class BibEntry:
       bibtex_entry.append(self.line('title', self.title.replace('"', '')))
       bibtex_entry.append(self.line('year', self.year.replace('"', '')))
       bibtex_entry.append(self.line('address', self.address.replace('"', '')))
-      bibtex_entry.append(self.line('series', self.url('"', '')))
-      bibtex_entry.append(self.line('url', self.series('"', '')))
+      bibtex_entry.append(self.line('series', self.url.replace('"', '')))
+      bibtex_entry.append(self.line('url', self.series.replace('"', '')))
       bibtex_entry.append('}')
       return ''.join(bibtex_entry)
 
