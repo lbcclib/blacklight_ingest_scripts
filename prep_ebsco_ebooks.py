@@ -1,5 +1,6 @@
 #!/usr/bin/python
 from pymarc import MARCReader, Field
+from bibtex_functions import BibEntry
 import sys, os
 from indexing_functions import index_file
 
@@ -50,6 +51,17 @@ with open(file_name, 'rb') as fh:
                'a', 'EBSCO ebooks',
                'b', 'Online'
          ]))
+      
+      bibliography = BibEntry()
+      bibliography.apply_marc_values(record)
+      
+      record.add_field(
+         Field(
+            tag = '951',
+            indicators = [' ', ' '],
+            subfields = [
+               'a', bibliography.as_bibtex()
+            ]))
 
       out.write(record.as_marc())
    out.close()
