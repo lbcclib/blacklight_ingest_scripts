@@ -2,7 +2,8 @@ from pymarc import MARCReader
 import re
 
 class BibEntry:
-   #Currently, by default, each BibEntry is in the book format.  However, this is flexible; I can pass a different format to this function to create other types of BibEntries.
+   #Currently, by default, each BibEntry is in the book format.
+   #However, this is flexible; I can pass a different format to this function to create other types of BibEntries.
    def __init__(self, type='book'):
       #Initializing all the required elements for our citations
       self.key = 'resource'
