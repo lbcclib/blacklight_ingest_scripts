@@ -2,8 +2,9 @@ from pymarc import MARCReader
 import re
 
 class BibEntry:
+   #Currently, by default, each BibEntry is in the book format.  However, this is flexible; I can pass a different format to this function to create other types of BibEntries.
    def __init__(self, type='book'):
-      #Required elements
+      #Initializing all the required elements for our citations
       self.key = 'resource'
       self.type = type
       self.authors = []
@@ -11,7 +12,7 @@ class BibEntry:
       self.title = ''
       self.year = ''
 
-      #Additional elements
+      #Additional elements, in case we can get those data from our MARC record
       self.address = ''
       self.series = ''
       self.url = ''
@@ -35,7 +36,7 @@ class BibEntry:
             if field260['a']:
                self.address = field260['a'].replace(' :', '')
             if field260['c']:
-               match = re.search(r'([12][0-9]{3})', field260['c'])
+               match = re.search(r'([12][0-9]{3})', field260['c']) #Find a 4-digit number that starts with a 1 or 2: that'll be our publication year
                if match:
                    self.year = match.group(0)
          else:
@@ -55,7 +56,7 @@ class BibEntry:
                   self.url = field856['u']
          
 
-   def apply_sample_values(self):
+   def apply_sample_values(self): # Some sample values for testing out these functions
       #self.authors.extend(['Mills, M. G. L.', 'Mills, Margie'])
       self.publisher = 'Jacana Media'
       self.title = 'Hyena nights & Kalahari days'
