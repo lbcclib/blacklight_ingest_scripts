@@ -2,8 +2,16 @@ from pymarc import MARCReader
 import re
 
 class BibEntry:
+   
+   # This function initializes a new BibEntry object to hold
+   # bibliographic data.
+   #
+   # Currently, by default, each BibEntry is in the book format.
+   # However, after I map Find It types to BibTeX types, I can pass
+   # different formats to this function to create other types of
+   # BibEntries (e.g. article, conference proceedings, etc.).
    def __init__(self, type='book'):
-      #Required elements
+      #Initializing all the required elements for our citations
       self.key = 'resource'
       self.type = type
       self.authors = []
@@ -11,7 +19,7 @@ class BibEntry:
       self.title = ''
       self.year = ''
 
-      #Additional elements
+      #Additional elements, in case we can get those data from our MARC record
       self.address = ''
       self.series = ''
       self.url = ''
@@ -35,7 +43,7 @@ class BibEntry:
             if field260['a']:
                self.address = field260['a'].replace(' :', '')
             if field260['c']:
-               match = re.search(r'([12][0-9]{3})', field260['c'])
+               match = re.search(r'([12][0-9]{3})', field260['c']) #Find a 4-digit number that starts with a 1 or 2: that'll be our publication year
                if match:
                    self.year = match.group(0)
          else:
@@ -48,21 +56,22 @@ class BibEntry:
                      match = re.search(r'([12][0-9]{3})', field264['c'])
                      if match:
                        self.year = match.group(0)
+      # Includes URLs in citations only for electronic resources
       for field950 in record.get_fields('950'):
          if field950['b']:
             if 'nline' in field950['b']:
                for field856 in record.get_fields('856'):
                   self.url = field856['u']
          
-
+   # Adds some sample values to a BibEntry object for testing purposes
    def apply_sample_values(self):
-      #self.authors.extend(['Mills, M. G. L.', 'Mills, Margie'])
       self.publisher = 'Jacana Media'
       self.title = 'Hyena nights & Kalahari days'
       self.year = '2010'
       self.address = 'Auckland Park, South Africa'
       self.series = ''
 
+   # Writes a BibEntry object as a BibTeX string
    def as_bibtex(self):
       bibtex_entry = []
       bibtex_entry.append('@')
@@ -78,6 +87,8 @@ class BibEntry:
       bibtex_entry.append('}')
       return ''.join(bibtex_entry)
 
+   # Helper function to generate lines in a BibTex
+   # string
    def line(self, label, value):
       if value is not None and 0 < len(value):
          if 'year' != label:
