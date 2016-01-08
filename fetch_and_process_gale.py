@@ -2,7 +2,7 @@
 from pymarc import MARCReader, Field
 import os, re, urllib
 from indexing_functions import index_file
-import linux_paths as paths #linux_paths or windows_paths
+import windows_paths as paths #linux_paths or windows_paths
 
 def remove_bad_subjects(record):
    for field650 in record.get_fields('650'):
@@ -36,7 +36,7 @@ def index_files(db_short_name, db_long_name):
 
          #fix 856
          for field856 in record.get_fields('856'):
-            field856['u'] = re.sub(r'userGroupName\=\[LOCATIONID\]', 'u\=oregongeo', field856['u'])
+            field856['u'] = re.sub(r'userGroupName\=\[LOCATIONID\]', 'u=oregongeo', field856['u'])
 
 
 
