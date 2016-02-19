@@ -40,28 +40,28 @@ with open(file_name, 'rb') as fh:
          remove_bad_subjects(record)
          fields_to_delete.append('655')
 
-      elif 'American Song' in source:
+      if 'American Song' in source:
          record.leader = record.leader[:6] + 'jz' + record.leader[8:]
          remove_bad_subjects(record)
          fields_to_delete.extend(['007', '490', '655'])
          remove_field_with_substring('500', 'a', 'Compact dis', record)
 
-      elif 'Credo Academic Core' == source:
+      if 'Credo Academic Core' == source:
          record.leader = record.leader[:6] + 'az' + record.leader[8:]
          remove_bad_subjects(record)
          fields_to_delete.append('655')
 
-      elif 'Classical Music Library' == source:
+      if 'Classical Music Library' == source:
          record.leader = record.leader[:6] + 'jz' + record.leader[8:]
          remove_bad_subjects(record)
          fields_to_delete.extend(['007', '655'])
 
-      elif 'Directory of Open Access Books' == source:
+      if 'Directory of Open Access Books' == source:
          record.leader = record.leader[:6] + 'az' + record.leader[8:]
          remove_bad_subjects(record)
          fields_to_delete.append('655')
 
-      elif 'ebrary Academic Complete' == source:
+      if 'ebrary Academic Complete' == source:
          remove_bad_subjects(record)
          if 'm' == record.leader[6]:
             record.leader = record.leader[:6] + 'a' + record.leader[7:]
@@ -71,7 +71,7 @@ with open(file_name, 'rb') as fh:
          remove_field_with_indicator('650', 1, '4', record)
          fields_to_delete.append('655')
 
-      elif ('Films' in source) and ('Demand' in source):
+      if ('Films' in source) and ('Demand' in source):
          record.leader = record.leader[:6] + 'gz' + record.leader[8:]
          remove_bad_subjects(record)
          remove_field_with_substring('650', 'a', 'Streaming video', record)
@@ -82,7 +82,7 @@ with open(file_name, 'rb') as fh:
                record['245']['a'] = record['245']['b']
          fields_to_delete.extend(['500', '655', '710'])
 
-      elif 'HathiTrust Public Domain only in US Access' == source:
+      if 'HathiTrust Public Domain only in US Access' == source:
          remove_bad_subjects(record)
          if 'a' == record.leader[6] and 'i' == record.leader[7]:
             record.leader = record.leader[:6] + 'sz' + record.leader[8:]
@@ -92,16 +92,16 @@ with open(file_name, 'rb') as fh:
          remove_field_with_indicator('650', 1, '4', record)
          fields_to_delete.append('655')
             
-      elif 'NCBI Bookshelf' == source:
+      if 'NCBI Bookshelf' == source:
          record.leader = record.leader[:6] + 'az' + record.leader[8:]
          remove_bad_subjects(record)
          fields_to_delete.extend(['007', '655'])
 
-      elif 'Smithsonian Global Sound For Libraries' == source:
+      if 'Smithsonian Global Sound For Libraries' == source:
          record.leader = record.leader[:6] + 'jz' + record.leader[8:]
          fields_to_delete.append('007')
 
-      elif 'Wright American Fiction' == source:
+      if 'Wright American Fiction' == source:
          record.leader = record.leader[:6] + 'az' + record.leader[8:]
          remove_field_with_indicator('655', 1, '4', record)
 
