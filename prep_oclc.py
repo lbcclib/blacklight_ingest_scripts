@@ -40,7 +40,7 @@ with open(file_name, 'rb') as fh:
          remove_bad_subjects(record)
          fields_to_delete.append('655')
 
-      elif 'American Song' == source:
+      elif 'American Song' in source:
          record.leader = record.leader[:6] + 'jz' + record.leader[8:]
          remove_bad_subjects(record)
          fields_to_delete.extend(['007', '490', '655'])
