@@ -86,7 +86,7 @@ with open(file_name, 'rb') as fh:
          remove_bad_subjects(record)
          if 'a' == record.leader[6] and 'i' == record.leader[7]:
             record.leader = record.leader[:6] + 'sz' + record.leader[8:]
-         else:
+         elif record.leader[6] not in ['c', 'd', 'e', 'f', 'q']:
             record.leader = record.leader[:6] + 'az' + record.leader[8:]
          remove_field_with_substring('650', 'a', 'Theses', record)
          remove_field_with_indicator('650', 1, '4', record)
