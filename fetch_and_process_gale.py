@@ -36,9 +36,7 @@ def index_files(db_short_name, db_long_name):
 
          #fix 856
          for field856 in record.get_fields('856'):
-            field856['u'] = re.sub(r'userGroupName\=\[LOCATIONID\]', 'u=oregongeo', field856['u'])
-
-
+            field856['u'] = re.sub('ic.galegroup.com.ic.ovic.topic.actionWin.', 'infotrac.galegroup.com/itweb/oregongeo?', re.sub(r'userGroupName\=\[LOCATIONID\]', 'id=geo', field856['u']))
 
          out.write(record.as_marc())
       out.close()
